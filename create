@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#Script that creats new python files
+
+#check if name provided
+if [[ ! $1 ]]; then
+	echo "Missing argument"
+	exit 1
+fi
+
+scriptname="$1"
+bindir="${HOME}/python"
+filename="${bindir}/${scriptname}"
+
+#check if it doesnt already exists
+if [[ -e $filename ]]; then
+	echo "File ${filename} already exists"
+	exit 1
+fi
+
+if type "$scriptname"; then
+	echo "There is a command with name ${scriptname}"
+fi
+
+#check if directory exists
+if [[ ! -d $bindir ]]; then
+	echo "Directory ${bindir} doesnt exists"
+	exit 1
+fi
+
+#create and open script
+echo '#!/usr/bin/env python' > "$filename"
+chmod u+x "$filename"
+$EDITOR "$filename"
+
+
+echo "end"
+exit 0
+
+
+
+
