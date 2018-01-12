@@ -10,16 +10,12 @@ fi
 
 scriptname="$1"
 bindir="${HOME}/python"
-filename="${bindir}/${scriptname}"
+filename="${bindir}/${scriptname}.py"
 
 #check if it doesnt already exists
 if [[ -e $filename ]]; then
 	echo "File ${filename} already exists"
 	exit 1
-fi
-
-if type "$scriptname"; then
-	echo "There is a command with name ${scriptname}"
 fi
 
 #check if directory exists
@@ -29,7 +25,10 @@ if [[ ! -d $bindir ]]; then
 fi
 
 #create and open script
-echo '#!/usr/bin/env python' > "$filename"
+echo '#!/usr/bin/env python' >> "$filename" 
+echo -e '\ndef main():\n\tpass\n\n\n\n\n\n' >> "$filename"
+echo -e 'if __name__ == '__main__':\n\tmain()\n\n' >> "$filename"
+
 chmod u+x "$filename"
 $EDITOR "$filename"
 
